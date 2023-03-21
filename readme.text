@@ -39,7 +39,7 @@ A-8. SELECT COUNT(*) as `teachers_without_phone_number` FROM `teachers` WHERE `p
 
 **QUERIES JOIN**
 
-Q-1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
+Q-1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia ✔
 A-1. 
 SELECT 
 `students`.`name` AS "student_name", 
@@ -47,11 +47,11 @@ SELECT
 `students`.`id`,
 `degrees`.`name` AS "degrees_name"
 FROM `students`
-JOIN `degrees` ON `students`.`id` = `degree_id`
+JOIN `degrees` ON `students`.`degree_id` = `degrees`.`id`
 WHERE `degrees`.`name` = "Corso di Laurea in Economia";
 
 ************************************************************************************
-Q-2. Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di Neuroscienze
+Q-2. Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di Neuroscienze ✔
 A-2.
 SELECT * 
 FROM `degrees`
@@ -60,7 +60,7 @@ WHERE `departments`.`name` = "Dipartimento di Neuroscienze"
 AND `degrees`.`level` = "magistrale";
 
 ******************************************************************
-Q-3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
+Q-3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44) ✔
 A-3.
 SELECT 
 `teachers`.`name` AS `teacher_name`,
@@ -73,7 +73,7 @@ JOIN `teachers` ON `teachers`.`id` = `course_teacher`.`teacher_id`
 WHERE `teachers`.`id` = 44;
 
 ******************************************************************************************************************************************************************
-Q-4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome
+Q-4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome ✔
 A-4.
 SELECT 
 `students`.`surname` AS `student_surname`,
@@ -87,10 +87,10 @@ SELECT
 FROM `students`
 JOIN `degrees` ON `students`.`degree_id` = `degrees`.`id`
 JOIN `departments` ON `degrees`.`department_id` = `departments`.`id`
-ORDER BY `students`.`surname`;
+ORDER BY `students`.`surname`, `student_name`;
 
 **************************************************************************
-Q-5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+Q-5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti ✔
 A-5.
 SELECT 
 `degrees`.`name` AS `degree_name`,
@@ -103,7 +103,7 @@ JOIN `course_teacher` ON `courses`.`id` = `course_teacher`.`course_id`
 JOIN `teachers` ON `teachers`.`id` = `course_teacher`.`teacher_id`;
 
 *********************************************************************************
-Q-6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54) 
+Q-6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54) ✔
 A-6.
 SELECT
 DISTINCT `teachers`.`name` AS `teacher_name`,
@@ -118,19 +118,21 @@ JOIN `departments` ON `departments`.`id` = `degrees`.`department_id`
 WHERE `departments`.`name` = "Dipartimento di Matematica";
 
 ********************************************************************************************************************
-Q-7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami
+Q-7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami ✔
 
+
+********************************************************************************************
 
 **QUERIES GROUP BY**
 
-Q-1. Contare quanti iscritti ci sono stati ogni anno
+Q-1. Contare quanti iscritti ci sono stati ogni anno ✔
 A-1.
 SELECT COUNT(`id`) AS `number_of_students_enrolled`, YEAR(`enrolment_date`) AS `enrolment_year`
 FROM `students` 
 GROUP BY YEAR(`enrolment_date`);
 
 *********************************************************************
-Q-2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+Q-2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio ✔
 A-2. 
 SELECT 
 COUNT(`id`) AS `number_of_teachers_at_this_address`, 
@@ -139,7 +141,7 @@ FROM `teachers`
 GROUP BY (`office_address`);
 
 **********************************************************
-Q-3. Calcolare la media dei voti di ogni appello d'esame
+Q-3. Calcolare la media dei voti di ogni appello d'esame ✔
 A-3. 
 SELECT 
 AVG(`vote`), 
@@ -148,7 +150,7 @@ FROM `exam_student`
 GROUP BY `exam_id`;
 
 *******************************************************************
-Q-4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+Q-4. Contare quanti corsi di laurea ci sono per ogni dipartimento ✔
 A-4.
 SELECT 
 COUNT(`degrees`.`id`) AS `number_of_degrees`,  
