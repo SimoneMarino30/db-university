@@ -119,7 +119,25 @@ WHERE `departments`.`name` = "Dipartimento di Matematica";
 
 ********************************************************************************************************************
 Q-7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami ✔
+A-7.
+SELECT 
+COUNT(*) AS "exams_attempted" ,
+`exam_student`.`student_id`,
+`students`.`name` AS "student_name",
+`students`.`surname` AS "student_surname",
+`courses`.`name` AS "course_name",
+MAX(`exam_student`.`vote`) AS "max_vote"
 
+FROM `exam_student`
+JOIN `exams` ON `exam_student`.`exam_id` = `exams`.`id`
+JOIN `courses` ON `exams`.`course_id` = `courses`.`id`
+JOIN `students` ON `exam_student`.`student_id` = `students`.`id`
+
+GROUP BY 
+	`exam_student`.`student_id`,
+    `courses`.`id`
+    
+HAVING MAX(`exam_student`.`vote`) >= 18;
 
 ********************************************************************************************
 
